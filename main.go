@@ -41,7 +41,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	//define a channel - for comunication between goroutine and your main process
+	//define a channel of string - for comunication between goroutine and your main process
 	// telling th emain process when the goroutine process is finished
 	strChan := make(chan string)
 
@@ -58,7 +58,7 @@ func main() {
 	//make a call to RequestTranslate function in cli package - making it a goroutine
 	go cli.RequestTranslate(reqBody, strChan, &wg)
 
-	//print goroutine response to channel for main process to acknoledge
+	//publishing goroutine response to channel for main process to acknoledge
 	processedStr := strings.ReplaceAll(<-strChan, "+", " ")
 	fmt.Printf("%s\n", processedStr)
 	close(strChan)
